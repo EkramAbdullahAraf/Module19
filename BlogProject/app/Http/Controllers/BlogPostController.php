@@ -14,6 +14,12 @@ class BlogPostController extends Controller
         $blogPosts = BlogPost::all();
         return response()->json($blogPosts);
     }
+    public function getComments()
+    {
+        $comments = Comment::all();
+        return response()->json($comments);
+    }
+
 
     /**
      * Show the form for creating a new resource.
