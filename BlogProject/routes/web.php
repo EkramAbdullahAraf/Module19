@@ -5,7 +5,6 @@ use App\Http\Controllers\BlogPostController;
 
 Route::get('/blog-posts/{id}', [BlogPostController::class, 'show']);
 Route::post('/blog-posts', [BlogPostController::class, 'store']);
-Route::view('/blog', 'blog.index');
 Route::view('/blog', 'blog');
 Route::get('/comments', [BlogPostController::class, 'getComments']);
 
