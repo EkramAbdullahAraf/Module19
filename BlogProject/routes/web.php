@@ -10,6 +10,10 @@ Route::get('/recent-posts', [BlogController::class, 'getRecentPosts']);
 Route::get('/comments', [BlogController::class, 'getComments']);
 Route::post('/comments', [BlogController::class, 'storeComment']);
 
+Route::get('/blog-details/{id}', [BlogController::class, 'getBlogPost']);
+Route::get('/blog-posts/{id}/comments', [BlogController::class, 'getComments']);
+Route::post('/blog-posts/{id}/comments', [BlogController::class, 'storeComment']);
+
 
 /*
 |--------------------------------------------------------------------------

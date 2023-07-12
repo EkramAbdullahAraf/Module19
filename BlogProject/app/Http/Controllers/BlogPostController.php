@@ -22,16 +22,20 @@ class BlogPostController extends Controller
         $recentPosts = BlogPost::orderBy('created_at', 'desc')->limit(5)->get();
         return response()->json($recentPosts);
     }
-
-    public function getComments()
+    public function getBlogPost($id)
     {
-        $comments = Comment::all();
+        $blogPost = BlogPost::find($id);
+        return response()->json($blogPost);
+    }
+
+    public function getComments($id)
+    {
+        $comments = Comment::where('blog_post_id', $id)->get();
         return response()->json($comments);
     }
 
-    public function storeComment(Request $request)
+    public function storeComment(Request $request, $id)
     {
         // Store the new comment in the database
     }
-
 }
