@@ -2,11 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlogPostController;
+use App\Http\Controllers\BlogController;
 
-//Route::view('/blog', 'blog.index');
-Route::view('/blog', 'blog');
-Route::get('/comments', [BlogPostController::class, 'getComment']);
-Route::post('/comments', [BlogPostController::class, 'storeComment']);
+Route::get('/blog', [BlogController::class, 'index']);
+Route::get('/blog-posts', [BlogController::class, 'getBlogPosts']);
+Route::get('/recent-posts', [BlogController::class, 'getRecentPosts']);
+Route::get('/comments', [BlogController::class, 'getComments']);
+Route::post('/comments', [BlogController::class, 'storeComment']);
+
 
 /*
 |--------------------------------------------------------------------------

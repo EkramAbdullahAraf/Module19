@@ -2,116 +2,156 @@
 <html>
 
 <head>
-    <title>Blog Posts</title>
-    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+    <title>Blog</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 
-<body class="bg-gray-100">
-<div class="container mx-auto p-4">
-    <h1 class="text-3xl font-bold mb-4">Blog Posts</h1>
-    <div id="blog-posts">
-        <!-- Display the blog posts dynamically -->
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">My Blog</a>
+</nav>
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-8">
+            <h1>Blog</h1>
+            <div id="blog-posts"></div>
+        </div>
+        <div class="col-md-4">
+            <h3>Recent Posts</h3>
+            <div id="recent-posts"></div>
+        </div>
     </div>
-    <hr class="my-8">
-    <h2 class="text-2xl font-bold mb-4">Comments</h2>
-    <div id="comments">
-        <!-- Display the comments dynamically -->
-    </div>
-    <form id="comment-form" class="mt-8">
-        <h3 class="text-lg font-bold mb-2">Leave a Comment</h3>
-        <div>
-            <label for="author" class="block mb-2">Name:</label>
-            <input type="text" id="author" name="author" class="border border-gray-300 px-4 py-2 w-full rounded focus:outline-none focus:border-blue-500" required>
+
+    <hr>
+
+    <h2 class="my-4">Comments</h2>
+    <form id="comment-form">
+        <div class="form-group">
+            <label for="author">Name</label>
+            <input type="text" class="form-control" id="author" required>
         </div>
-        <div class="mt-4">
-            <label for="content" class="block mb-2">Comment:</label>
-            <textarea id="content" name="content" class="border border-gray-300 px-4 py-2 w-full rounded focus:outline-none focus:border-blue-500" required></textarea>
+        <div class="form-group">
+            <label for="content">Comment</label>
+            <textarea class="form-control" id="content" rows="3" required></textarea>
         </div>
-        <div class="mt-4">
-            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Submit</button>
-        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+    <div id="comments" class="my-4"></div>
 </div>
 
-<script src="{{ mix('js/app.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
-    // Fetch and display the blog posts
+    // Fetch blog posts using Axios
     axios.get('/blog-posts')
-        .then(function (response) {
-            var blogPosts = response.data;
-            var blogPostsContainer = document.getElementById('blog-posts');
+        .then(response => {
+            const blogPosts = response.data;
+            let blogPostsHTML = '';
 
-            blogPosts.forEach(function (blogPost) {
-                var blogPostElement = document.createElement('div');
-                blogPostElement.innerHTML = `
-                        <h2 class="text-2xl font-bold mb-2">${blogPost.title}</h2>
-                        <p>${blogPost.content}</p>
-                        <a href="/blog-posts/${blogPost.id}" class="text-blue-500 hover:text-blue-600">Read more</a>
-                        <hr class="my-4">
+            // Generate HTML for each blog post
+            blogPosts.forEach(blogPost => {
+                blogPostsHTML += `
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h2 class="card-title">${blogPost.title}</h2>
+                                <p class="card-text">${blogPost.content}</p>
+                                <a href="/blog-posts/${blogPost.id}" class="btn btn-primary">Read more</a>
+                            </div>
+                        </div>
                     `;
-
-                blogPostsContainer.appendChild(blogPostElement);
             });
+
+            // Append the generated HTML to the blog-posts container
+            document.getElementById('blog-posts').innerHTML = blogPostsHTML;
         })
-        .catch(function (error) {
-            console.log(error);
+        .catch(error => {
+            console.error('Error:', error);
         });
 
-    // Fetch and display the comments
-    axios.get('/comments')
-        .then(function (response) {
-            var comments = response.data;
-            var commentsContainer = document.getElementById('comments');
+    // Fetch recent posts using Axios
+    axios.get('/recent-posts')
+        .then(response => {
+            const recentPosts = response.data;
+            let recentPostsHTML = '';
 
-            comments.forEach(function (comment) {
-                var commentElement = document.createElement('div');
-                commentElement.innerHTML = `
-                        <h4 class="font-bold mb-1">${comment.author}</h4>
-                        <p>${comment.content}</p>
-                        <hr class="my-4">
+            // Generate HTML for each recent post
+            recentPosts.forEach(recentPost => {
+                recentPostsHTML += `
+                        <div class="card mb-2">
+                            <div class="card-body">
+                                <h5 class="card-title">${recentPost.title}</h5>
+                            </div>
+                        </div>
                     `;
-
-                commentsContainer.appendChild(commentElement);
             });
+
+            // Append the generated HTML to the recent-posts container
+            document.getElementById('recent-posts').innerHTML = recentPostsHTML;
         })
-        .catch(function (error) {
-            console.log(error);
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
+    // Fetch comments using Axios
+    axios.get('/comments')
+        .then(response => {
+            const comments = response.data;
+            let commentsHTML = '';
+
+            // Generate HTML for each comment
+            comments.forEach(comment => {
+                commentsHTML += `
+                        <div class="card my-2">
+                            <div class="card-body">
+                                <h5 class="card-title">${comment.author}</h5>
+                                <p class="card-text">${comment.content}</p>
+                            </div>
+                        </div>
+                    `;
+            });
+
+            // Append the generated HTML to the comments container
+            document.getElementById('comments').innerHTML = commentsHTML;
+        })
+        .catch(error => {
+            console.error('Error:', error);
         });
 
     // Handle comment submission
-    var commentForm = document.getElementById('comment-form');
+    document.getElementById('comment-form').addEventListener('submit', event => {
+        event.preventDefault();
 
-    commentForm.addEventListener('submit', function (e) {
-        e.preventDefault();
+        const authorInput = document.getElementById('author');
+        const contentInput = document.getElementById('content');
 
-        var authorInput = document.getElementById('author');
-        var contentInput = document.getElementById('content');
-
-        var commentData = {
+        const commentData = {
             author: authorInput.value,
             content: contentInput.value
         };
 
+        // Submit comment using Axios
         axios.post('/comments', commentData)
-            .then(function (response) {
-                var newComment = response.data;
+            .then(response => {
+                const newComment = response.data;
 
-                var commentElement = document.createElement('div');
-                commentElement.innerHTML = `
-                        <h4 class="font-bold mb-1">${newComment.author}</h4>
-                        <p>${newComment.content}</p>
-                        <hr class="my-4">
+                const commentHTML = `
+                        <div class="card my-2">
+                            <div class="card-body">
+                                <h5 class="card-title">${newComment.author}</h5>
+                                <p class="card-text">${newComment.content}</p>
+                            </div>
+                        </div>
                     `;
 
-                var commentsContainer = document.getElementById('comments');
-                commentsContainer.appendChild(commentElement);
+                // Append the new comment HTML to the comments container
+                document.getElementById('comments').insertAdjacentHTML('beforeend', commentHTML);
 
+                // Clear the input fields
                 authorInput.value = '';
                 contentInput.value = '';
             })
-            .catch(function (error) {
-                console.log(error);
+            .catch(error => {
+                console.error('Error:', error);
             });
     });
 </script>
