@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlogPostController;
 use App\Http\Controllers\BlogController;
 
-Route::get('/blog', [BlogController::class, 'index']);
+Route::view('/blog', 'blog');
 Route::get('/blog-posts', [BlogController::class, 'getBlogPosts']);
 Route::get('/recent-posts', [BlogController::class, 'getRecentPosts']);
 Route::get('/comments', [BlogController::class, 'getComments']);
