@@ -14,13 +14,21 @@ class BlogPostController extends Controller
         $blogPosts = BlogPost::all();
         return response()->json($blogPosts);
     }
-    public function getComments()
+    public function getComment()
     {
         $comments = Comment::all();
         return response()->json($comments);
     }
 
+    public function storeComment(Request $request)
+    {
+        $comment = new Comment();
+        $comment->author = $request->input('author');
+        $comment->content = $request->input('content');
+        $comment->save();
 
+        return response()->json($comment);
+    }
     /**
      * Show the form for creating a new resource.
      */

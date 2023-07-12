@@ -1,0 +1,74 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+/* Custom styles for blog post section */
+#blog-posts {
+    margin-top: 2rem;
+}
+
+#blog-posts h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+#blog-posts p {
+    margin-bottom: 1rem;
+}
+
+#blog-posts a {
+    color: #3182ce;
+    text-decoration: none;
+}
+
+/* Custom styles for comment section */
+#comments {
+    margin-top: 2rem;
+}
+
+#comments h4 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+#comments p {
+    margin-bottom: 1rem;
+}
+
+/* Custom styles for comment form */
+#comment-form {
+    margin-top: 2rem;
+}
+
+#comment-form h3 {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+#comment-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+#comment-form input,
+#comment-form textarea {
+    border: 1px solid #e2e8f0;
+    padding: 0.5rem;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+#comment-form button {
+    background-color: #4299e1;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+
+#comment-form button:hover {
+    background-color: #3182ce;
+}
